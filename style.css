@@ -54,19 +54,19 @@
 
 /* --- Light Mode (Default) --- */
 :root, [data-theme="light"] {
-  /* Clean, fresh surfaces */
-  --color-bg:             #FAFBF9;
-  --color-surface:        #F4F6F2;
+  /* Warm linen surfaces */
+  --color-bg:             #FAF6F1;
+  --color-surface:        #F5F0EA;
   --color-surface-2:      #FFFFFF;
-  --color-surface-offset: #EFF1ED;
-  --color-border:         #D6D9D2;
-  --color-divider:        #E0E3DC;
+  --color-surface-offset: #EFE9E1;
+  --color-border:         #DDD6CC;
+  --color-divider:        #E6DFD6;
 
   /* Text */
-  --color-text:           #2B2B2B;
-  --color-text-muted:     #5E6458;
-  --color-text-faint:     #9CA396;
-  --color-text-inverse:   #FAFBF9;
+  --color-text:           #2C2620;
+  --color-text-muted:     #645C52;
+  --color-text-faint:     #A09788;
+  --color-text-inverse:   #FAF6F1;
 
   /* Deep forest green (primary) */
   --color-primary:        #1B3A2D;
