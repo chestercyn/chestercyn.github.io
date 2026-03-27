@@ -1194,7 +1194,7 @@ a:hover {
     justify-content: center;
   }
   .hero {
-    min-height: 70vh;
+    min-height: auto;
     align-items: flex-end;
   }
   .hero-content {
@@ -1205,14 +1205,16 @@ a:hover {
   .hero-bg::after {
     background: linear-gradient(
       0deg,
-      rgba(27, 58, 45, 0.92) 0%,
-      rgba(27, 58, 45, 0.75) 40%,
-      rgba(27, 58, 45, 0.4) 70%,
-      rgba(27, 58, 45, 0.2) 100%
+      rgba(27, 58, 45, 0.94) 0%,
+      rgba(27, 58, 45, 0.85) 35%,
+      rgba(27, 58, 45, 0.65) 65%,
+      rgba(27, 58, 45, 0.5) 100%
     );
   }
   .hero-content h1 {
-    font-size: var(--text-2xl);
+    font-size: clamp(2.8rem, 2rem + 5vw, 4.5rem);
+    color: #FFFFFF;
+    text-shadow: 0 2px 24px rgba(0, 0, 0, 0.45), 0 1px 4px rgba(0, 0, 0, 0.3);
   }
   .image-strip {
     grid-template-columns: repeat(2, 1fr);
