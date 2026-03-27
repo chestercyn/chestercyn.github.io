@@ -710,6 +710,16 @@ a:hover {
   margin: var(--space-4) 0;
 }
 
+.blog-post-detail .blog-detail-content ul,
+.blog-post-detail .blog-detail-content ol {
+  margin: var(--space-2) 0 var(--space-4) var(--space-6);
+}
+
+.blog-post-detail .blog-detail-content li {
+  margin-bottom: var(--space-2);
+  line-height: 1.7;
+}
+
 .blog-post-detail .blog-detail-content a {
   color: var(--color-accent);
   text-decoration: underline;
