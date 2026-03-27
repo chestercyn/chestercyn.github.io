@@ -552,6 +552,31 @@
         </a>
       </div>
     </div>
+    <div class="footer-form">
+      <h3>Leave a Message</h3>
+      <form id="contactForm" class="contact-form">
+        <div class="form-row">
+          <div class="form-group">
+            <label for="senderName">Name</label>
+            <input type="text" id="senderName" name="name" required placeholder="Your name">
+          </div>
+          <div class="form-group">
+            <label for="senderEmail">Email</label>
+            <input type="email" id="senderEmail" name="email" required placeholder="Your email">
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="senderMessage">Message</label>
+          <textarea id="senderMessage" name="message" rows="4" required placeholder="Your message..."></textarea>
+        </div>
+        <button type="submit" class="form-submit" id="formSubmitBtn">
+          <span class="form-submit-text">Send Message</span>
+          <svg class="form-submit-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 2L11 13"/><path d="M22 2L15 22L11 13L2 9L22 2Z"/></svg>
+        </button>
+        <p class="form-status" id="formStatus"></p>
+      </form>
+    </div>
+
     <div class="footer-profiles">
       <h3>Academic Profiles</h3>
       <a href="https://scholar.google.com/citations?user=K_8OCgEAAAAJ&hl=en" target="_blank" rel="noopener noreferrer">
@@ -757,6 +782,31 @@ window.addEventListener('scroll', () => {
     }
   });
 });
+
+// Contact form — opens visitor's email client with pre-filled message
+(function() {
+  const form = document.getElementById('contactForm');
+  const status = document.getElementById('formStatus');
+  if (!form) return;
+
+  form.addEventListener('submit', function(e) {
+    e.preventDefault();
+    const data = new FormData(form);
+    const name = data.get('name').trim();
+    const email = data.get('email').trim();
+    const message = data.get('message').trim();
+
+    const subject = 'Website Message from ' + name;
+    const body = 'From: ' + name + '\nEmail: ' + email + '\n\n' + message;
+    const mailto = 'mailto:chester.cheung@icloud.com' +
+      '?subject=' + encodeURIComponent(subject) +
+      '&body=' + encodeURIComponent(body);
+
+    window.location.href = mailto;
+    status.textContent = 'Opening your email client...';
+    status.classList.add('form-status--success');
+  });
+})();
 </script>
 
 </body>

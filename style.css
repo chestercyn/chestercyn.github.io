@@ -915,7 +915,7 @@ a:hover {
   max-width: var(--content-wide);
   margin-inline: auto;
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: 1fr 1.2fr 0.8fr;
   gap: var(--space-10);
   align-items: start;
 }
@@ -957,6 +957,118 @@ a:hover {
   width: 18px;
   height: 18px;
   flex-shrink: 0;
+}
+
+/* Contact Form */
+.footer-form h3 {
+  font-size: var(--text-lg);
+  color: var(--color-accent-light);
+  margin-bottom: var(--space-4);
+}
+
+.contact-form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+
+.form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-3);
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+}
+
+.form-group label {
+  font-size: var(--text-xs);
+  color: oklch(from var(--color-text-inverse) l c h / 0.6);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  font-weight: 500;
+}
+
+.form-group input,
+.form-group textarea {
+  background: oklch(from var(--color-text-inverse) l c h / 0.1);
+  border: 1px solid oklch(from var(--color-text-inverse) l c h / 0.15);
+  border-radius: 6px;
+  padding: 10px 14px;
+  font-family: var(--font-body);
+  font-size: var(--text-sm);
+  color: var(--color-text-inverse);
+  transition: border-color var(--transition-interactive), background var(--transition-interactive);
+  outline: none;
+}
+
+.form-group input::placeholder,
+.form-group textarea::placeholder {
+  color: oklch(from var(--color-text-inverse) l c h / 0.35);
+}
+
+.form-group input:focus,
+.form-group textarea:focus {
+  border-color: var(--color-accent-light);
+  background: oklch(from var(--color-text-inverse) l c h / 0.14);
+}
+
+.form-group textarea {
+  resize: vertical;
+  min-height: 80px;
+}
+
+.form-submit {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+  padding: 10px 24px;
+  background: var(--color-accent);
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  font-family: var(--font-body);
+  font-size: var(--text-sm);
+  font-weight: 500;
+  cursor: pointer;
+  transition: background var(--transition-interactive), transform 0.15s ease;
+  align-self: flex-start;
+}
+
+.form-submit:hover {
+  background: oklch(from var(--color-accent) calc(l - 0.05) c h);
+  transform: translateY(-1px);
+}
+
+.form-submit:active {
+  transform: translateY(0);
+}
+
+.form-submit:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.form-submit-icon {
+  flex-shrink: 0;
+}
+
+.form-status {
+  font-size: var(--text-xs);
+  margin-top: var(--space-1);
+  min-height: 1.2em;
+}
+
+.form-status--success {
+  color: oklch(0.8 0.12 145);
+}
+
+.form-status--info {
+  color: oklch(from var(--color-text-inverse) l c h / 0.6);
 }
 
 .footer-profiles {
@@ -1029,6 +1141,9 @@ a:hover {
     grid-template-columns: 1fr;
   }
   .footer-content {
+    grid-template-columns: 1fr;
+  }
+  .form-row {
     grid-template-columns: 1fr;
   }
 }
