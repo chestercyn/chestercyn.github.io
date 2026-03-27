@@ -20,11 +20,11 @@
 
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Chester Yee-Nok Cheung — Clinical Neuroscientist &amp; Speech-Language Pathologist</title>
-<meta name="description" content="Chester Yee-Nok Cheung is a PhD candidate at The University of Hong Kong specializing in aphasia neurorehabilitation, brain stimulation, and EEG connectomics.">
+<title>Chester Cheung — Clinical Neuroscientist &amp; Speech-Language Pathologist</title>
+<meta name="description" content="Chester Cheung is a PhD candidate at The University of Hong Kong specializing in aphasia neurorehabilitation, brain stimulation, and EEG connectomics.">
 
 <!-- Open Graph -->
-<meta property="og:title" content="Chester Yee-Nok Cheung — Clinical Neuroscientist">
+<meta property="og:title" content="Chester Cheung — Clinical Neuroscientist">
 <meta property="og:description" content="PhD candidate at HKU specializing in aphasia, brain stimulation, and EEG connectomics.">
 <meta property="og:type" content="profile">
 
@@ -33,7 +33,7 @@
 {
   "@context": "https://schema.org",
   "@type": "Person",
-  "name": "Chester Yee-Nok Cheung",
+  "name": "Chester Cheung",
   "jobTitle": "PhD Candidate & Speech-Language Pathologist",
   "affiliation": {
     "@type": "Organization",
@@ -59,6 +59,10 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
 
+<!-- Leaflet -->
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
 <link rel="stylesheet" href="./base.css">
 <link rel="stylesheet" href="./style.css">
 </head>
@@ -70,7 +74,7 @@
 <!-- ========== HEADER ========== -->
 <header class="site-header">
   <div class="logo">
-    <a href="#" class="logo-name">Chester Yee-Nok Cheung</a>
+    <a href="#" class="logo-name">Chester Cheung</a>
     <span class="logo-title">PhD Candidate, The University of Hong Kong</span>
   </div>
 
@@ -101,7 +105,7 @@
   </div>
 
   <div class="hero-content">
-    <h1>Chester<br>Yee-Nok<br>Cheung</h1>
+    <h1>Chester<br>Cheung</h1>
     <p class="hero-subtitle">Clinical Neuroscientist &amp; Speech-Language Pathologist</p>
     <p class="hero-affiliation">Academic Unit of Human Communication, Learning, and Development<br>The University of Hong Kong</p>
     <p class="hero-bio">My research focuses on advancing individualized neuromodulation and neuroimaging approaches for post-stroke aphasia and other neurogenic communication disorders, bridging cutting-edge neuroscience with real-world clinical practice.</p>
@@ -290,6 +294,12 @@
     <div class="section-header reveal">
       <h2>Presentations</h2>
       <div class="section-line"></div>
+    </div>
+
+    <!-- Interactive Conference Map -->
+    <div class="conf-map-wrapper reveal">
+      <p class="conf-map-caption">Conference locations across 10 cities worldwide, 2023–2025</p>
+      <div id="confMap" class="conf-map"></div>
     </div>
 
     <div class="presentations-list" id="presentationsVisible">
@@ -560,7 +570,7 @@
     </div>
   </div>
   <div class="footer-bottom">
-    <span>&copy; 2026 Chester Yee-Nok Cheung</span>
+    <span>&copy; 2026 Chester Cheung</span>
     <a href="https://www.perplexity.ai/computer" target="_blank" rel="noopener noreferrer">Created with Perplexity Computer</a>
   </div>
 </footer>
@@ -628,6 +638,106 @@ function togglePresentations() {
     hidden.querySelectorAll('.reveal').forEach(el => observer.observe(el));
   }
 }
+
+// Conference Map
+(function() {
+  const mapEl = document.getElementById('confMap');
+  if (!mapEl) return;
+
+  const isMobile = window.innerWidth < 768;
+  const map = L.map('confMap', {
+    center: [20, 15],
+    zoom: isMobile ? 1 : 2,
+    minZoom: 1,
+    maxZoom: 6,
+    zoomControl: false,
+    attributionControl: false,
+    scrollWheelZoom: false
+  });
+
+  L.control.zoom({ position: 'bottomright' }).addTo(map);
+
+  // Muted green-toned tiles
+  L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
+    attribution: '&copy; OpenStreetMap &copy; CARTO',
+    subdomains: 'abcd',
+    maxZoom: 19
+  }).addTo(map);
+
+  const cities = [
+    { name: 'Bangkok', country: 'Thailand', lat: 13.7563, lng: 100.5018, year: '2025', count: 1,
+      conf: 'Asia Pacific Conference on Speech, Language & Hearing' },
+    { name: 'Tokyo', country: 'Japan', lat: 35.6762, lng: 139.6503, year: '2025', count: 1,
+      conf: 'CogSci Asia-Pacific / Cognitive Science' },
+    { name: 'Washington, D.C.', country: 'USA', lat: 38.9072, lng: -77.0369, year: '2025', count: 2,
+      conf: 'ASHA Convention (2 presentations)' },
+    { name: 'Kobe', country: 'Japan', lat: 34.6901, lng: 135.1956, year: '2025', count: 1,
+      conf: 'International Brain Stimulation Conference' },
+    { name: 'Seattle', country: 'USA', lat: 47.6062, lng: -122.3321, year: '2024', count: 1,
+      conf: 'ASHA Convention' },
+    { name: 'Nara', country: 'Japan', lat: 34.6851, lng: 135.8048, year: '2024', count: 1,
+      conf: 'Academy of Aphasia Annual Meeting' },
+    { name: 'Brisbane', country: 'Australia', lat: -27.4698, lng: 153.0251, year: '2024', count: 1,
+      conf: 'International Aphasia Rehabilitation Conference' },
+    { name: 'Zhuhai', country: 'China', lat: 22.2710, lng: 113.5767, year: '2024', count: 1,
+      conf: 'Neuromodulation Society in Greater Bay Area' },
+    { name: 'Hong Kong', country: 'China', lat: 22.3193, lng: 114.1694, year: '2023', count: 1,
+      conf: 'Conference on New Frontiers in Techno-Humanities' },
+    { name: 'Boston', country: 'USA', lat: 42.3601, lng: -71.0589, year: '2023', count: 2,
+      conf: 'ASHA Convention (2 presentations)' }
+  ];
+
+  const markerIcon = L.divIcon({
+    className: 'conf-marker',
+    iconSize: [14, 14],
+    iconAnchor: [7, 7],
+    popupAnchor: [0, -10]
+  });
+
+  const pulseIcon = L.divIcon({
+    className: 'conf-marker conf-marker--pulse',
+    iconSize: [14, 14],
+    iconAnchor: [7, 7],
+    popupAnchor: [0, -10]
+  });
+
+  cities.forEach(c => {
+    const icon = c.year === '2025' ? pulseIcon : markerIcon;
+    const popup = '<div class="conf-popup">' +
+      '<strong>' + c.name + '</strong><br>' +
+      '<span class="conf-popup-conf">' + c.conf + '</span><br>' +
+      '<span class="conf-popup-year">' + c.year + '</span>' +
+      '</div>';
+    L.marker([c.lat, c.lng], { icon: icon })
+      .bindPopup(popup, { className: 'conf-popup-container', closeButton: false })
+      .addTo(map);
+  });
+
+  // Enable scroll zoom after first click
+  map.once('click', function() {
+    map.scrollWheelZoom.enable();
+  });
+
+  // Fit bounds to show all markers
+  const bounds = L.latLngBounds(cities.map(c => [c.lat, c.lng]));
+
+  // Re-fit when map enters the viewport (Leaflet needs a visible, correctly-sized container)
+  const mapObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        map.invalidateSize();
+        map.fitBounds(bounds, { padding: [20, 20], maxZoom: 3 });
+        mapObserver.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.1 });
+  mapObserver.observe(mapEl);
+
+  // Initial fit (works on desktop where map may be rendered immediately)
+  map.fitBounds(bounds, { padding: [20, 20], maxZoom: 3 });
+
+  window.addEventListener('resize', () => { map.invalidateSize(); });
+})();
 
 // Active nav highlight on scroll
 const sections = document.querySelectorAll('section[id], footer[id]');
