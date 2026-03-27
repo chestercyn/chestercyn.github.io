@@ -82,6 +82,7 @@
   <nav class="main-nav" id="mainNav" aria-label="Main navigation">
     <a href="#about" class="active">About</a>
     <a href="#research">Research</a>
+    <a href="#updates">Updates</a>
     <a href="#publications">Publications</a>
     <a href="#presentations">Presentations</a>
     <a href="#teaching">Teaching</a>
@@ -218,8 +219,22 @@
   </div>
 </section>
 
+<!-- ========== UPDATES (BLOG) ========== -->
+<section class="section" id="updates">
+  <div class="section-container">
+    <div class="section-header reveal">
+      <h2>Updates</h2>
+      <div class="section-line"></div>
+    </div>
+    <div class="updates-grid" id="updatesGrid">
+      <!-- Blog posts will be inserted here -->
+    </div>
+    <p class="updates-empty" id="updatesEmpty" style="text-align:center;color:var(--color-text-muted);font-style:italic;padding:var(--space-8) 0;">New posts coming soon.</p>
+  </div>
+</section>
+
 <!-- ========== PUBLICATIONS ========== -->
-<section class="section" id="publications">
+<section class="section section-alt" id="publications">
   <div class="section-container">
     <div class="section-header reveal">
       <h2>Publications</h2>
@@ -294,7 +309,7 @@
 </section>
 
 <!-- ========== PRESENTATIONS ========== -->
-<section class="section section-alt" id="presentations">
+<section class="section" id="presentations">
   <div class="section-container">
     <div class="section-header reveal">
       <h2>Presentations</h2>
@@ -405,7 +420,7 @@
 </section>
 
 <!-- ========== TEACHING & SERVICE ========== -->
-<section class="section" id="teaching">
+<section class="section section-alt" id="teaching">
   <div class="section-container">
     <div class="section-header reveal">
       <h2>Teaching &amp; Service</h2>
@@ -446,7 +461,7 @@
 </section>
 
 <!-- ========== AWARDS ========== -->
-<section class="section section-alt" id="awards">
+<section class="section" id="awards">
   <div class="section-container">
     <div class="section-header reveal">
       <h2>Awards</h2>
@@ -485,7 +500,7 @@
 </section>
 
 <!-- ========== SKILLS ========== -->
-<section class="section" id="skills">
+<section class="section section-alt" id="skills">
   <div class="section-container">
     <div class="section-header reveal">
       <h2>Skills</h2>
@@ -607,6 +622,18 @@
     <a href="https://www.perplexity.ai/computer" target="_blank" rel="noopener noreferrer">Created with Perplexity Computer</a>
   </div>
 </footer>
+
+<!-- Blog post overlay -->
+<div class="blog-overlay" id="blogOverlay">
+  <div class="blog-post-detail">
+    <button class="blog-close" id="blogClose" aria-label="Close">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6L6 18M6 6l12 12"/></svg>
+    </button>
+    <div class="blog-detail-date" id="blogDetailDate"></div>
+    <h2 class="blog-detail-title" id="blogDetailTitle"></h2>
+    <div class="blog-detail-content" id="blogDetailContent"></div>
+  </div>
+</div>
 
 <!-- ========== SCRIPTS ========== -->
 <script>
@@ -815,6 +842,84 @@ window.addEventListener('scroll', () => {
     status.textContent = 'Opening your email client...';
     status.classList.add('form-status--success');
   });
+})();
+
+// ========== BLOG ENGINE ==========
+(function(){
+  /*
+   * Blog posts array — add new posts here.
+   * Each post: { id, date, title, excerpt, content (HTML string), image (optional URL) }
+   * Posts are displayed newest-first.
+   */
+  const blogPosts = [
+    // Example structure (uncomment and fill when adding a post):
+    // {
+    //   id: 'post-1',
+    //   date: 'March 2026',
+    //   title: 'Post Title Here',
+    //   excerpt: 'A short summary of the post...',
+    //   image: 'assets/blog/post-1.jpg',  // optional
+    //   content: '<p>Full HTML content of the blog post...</p>'
+    // },
+  ];
+
+  const grid = document.getElementById('updatesGrid');
+  const overlay = document.getElementById('blogOverlay');
+  const detailDate = document.getElementById('blogDetailDate');
+  const detailTitle = document.getElementById('blogDetailTitle');
+  const detailContent = document.getElementById('blogDetailContent');
+  const closeBtn = document.getElementById('blogClose');
+
+  function renderCards() {
+    if (!grid || blogPosts.length === 0) return;
+    grid.innerHTML = blogPosts.map(post => `
+      <article class="blog-card reveal" data-post-id="${post.id}">
+        ${post.image ? `<img class="blog-card-image" src="${post.image}" alt="${post.title}" loading="lazy">` : ''}
+        <div class="blog-card-body">
+          <div class="blog-card-date">${post.date}</div>
+          <h3 class="blog-card-title">${post.title}</h3>
+          <p class="blog-card-excerpt">${post.excerpt}</p>
+          <span class="blog-card-readmore">Read more <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></span>
+        </div>
+      </article>
+    `).join('');
+
+    // Attach click handlers
+    grid.querySelectorAll('.blog-card').forEach(card => {
+      card.addEventListener('click', () => {
+        const post = blogPosts.find(p => p.id === card.dataset.postId);
+        if (post) openPost(post);
+      });
+    });
+
+    // Trigger reveal for new cards
+    grid.querySelectorAll('.reveal').forEach(el => {
+      el.classList.add('visible');
+    });
+  }
+
+  function openPost(post) {
+    detailDate.textContent = post.date;
+    detailTitle.textContent = post.title;
+    detailContent.innerHTML = post.content;
+    overlay.classList.add('active');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closePost() {
+    overlay.classList.remove('active');
+    document.body.style.overflow = '';
+  }
+
+  if (closeBtn) closeBtn.addEventListener('click', closePost);
+  if (overlay) overlay.addEventListener('click', (e) => {
+    if (e.target === overlay) closePost();
+  });
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') closePost();
+  });
+
+  renderCards();
 })();
 </script>
 
